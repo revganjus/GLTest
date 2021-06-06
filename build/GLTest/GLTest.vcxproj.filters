@@ -16,7 +16,4 @@
       <Filter>glad</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\main.h" />
-  </ItemGroup>
 </Project>
