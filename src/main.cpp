@@ -9,11 +9,11 @@ static const int WINDOW_HEIGHT = 600;
 const char * vertexShaderSource = 
   R"glsl(
     #version 330 core
-    layout (location = 0) in vec3 aPos;
+    layout (location = 0) in vec3 aPos; // the position variable has attribute position 0
 
     void main()
     {
-      gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+      gl_Position = vec4(aPos, 1.0);
     }
   )glsl";
 
@@ -22,9 +22,11 @@ const char* fragmentShaderSource1 =
     #version 330 core
     out vec4 FragColor;
 
+    uniform vec4 ourColor;
+
     void main()
     {
-      FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+      FragColor = ourColor;
     }
   )glsl";
 
@@ -33,9 +35,11 @@ const char* fragmentShaderSource2 =
     #version 330 core
     out vec4 FragColor;
 
+    uniform vec4 ourColor;
+
     void main()
     {
-      FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
+      FragColor = vec4(1.0f, ourColor.yz, 1.0f);
     }
   )glsl";
 
@@ -77,8 +81,8 @@ int main()
   // glfw: initialize and configure
   // ------------------------------
   glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
@@ -235,6 +239,12 @@ int main()
     for (int i = 0; i < TRIANGLES_COUNT; ++i)
     {
       glUseProgram(shaderPrograms[i]);
+
+      // update the uniform color
+      float timeValue = glfwGetTime();
+      float greenValue = sin(timeValue) / 2.0f + 0.5f;
+      int vertexColorLocation = glGetUniformLocation(shaderPrograms[i], "ourColor");
+      glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
       glBindVertexArray(VAOs[i]);
       glDrawArrays(GL_TRIANGLES, 0, 3);
