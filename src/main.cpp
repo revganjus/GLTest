@@ -6,26 +6,38 @@
 static const int WINDOW_WIDTH  = 800;
 static const int WINDOW_HEIGHT = 600;
 
-const char * vertexShaderSource = "#version 330 core\n"
-  "layout (location = 0) in vec3 aPos;\n"
-  "void main()\n"
-  "{\n"
-  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-  "}\0";
+const char * vertexShaderSource = 
+  R"glsl(
+    #version 330 core
+    layout (location = 0) in vec3 aPos;
 
-const char * fragmentShaderSource1 = "#version 330 core\n"
-  "out vec4 FragColor;\n"
-  "void main()\n"
-  "{\n"
-  "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-  "}\0";
+    void main()
+    {
+      gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    }
+  )glsl";
 
-const char* fragmentShaderSource2 = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"    FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
-"}\0";
+const char* fragmentShaderSource1 =
+  R"glsl(
+    #version 330 core
+    out vec4 FragColor;
+
+    void main()
+    {
+      FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    }
+  )glsl";
+
+const char* fragmentShaderSource2 = 
+  R"glsl(
+    #version 330 core
+    out vec4 FragColor;
+
+    void main()
+    {
+      FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
+    }
+  )glsl";
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -167,13 +179,6 @@ int main()
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
-  //float vertices[] = {
-   //    0.5f,  0.5f, 0.0f,  // top right
-   //    0.5f, -0.5f, 0.0f,  // bottom right
-   //   -0.5f, -0.5f, 0.0f,  // bottom left
-   //   -0.5f,  0.5f, 0.0f   // top left 
-  //};
-
   float vertices[] = {
       // first triangle
       -0.5f,  0.5f, 0.0f,  // top
@@ -188,8 +193,8 @@ int main()
   const unsigned int TRIANGLES_COUNT = sizeof(vertices) / (sizeof(float) * 9);
   const auto         TRIANGLE_SIZE   = sizeof(vertices) / TRIANGLES_COUNT;
 
-  unsigned int VBOs[TRIANGLES_COUNT];// , VBO2, VAO1, VAO2;
-  unsigned int VAOs[TRIANGLES_COUNT];// , VBO2, VAO1, VAO2;
+  unsigned int VBOs[TRIANGLES_COUNT];
+  unsigned int VAOs[TRIANGLES_COUNT];
   glGenVertexArrays(TRIANGLES_COUNT, VAOs);
   glGenBuffers(TRIANGLES_COUNT, VBOs);
 
