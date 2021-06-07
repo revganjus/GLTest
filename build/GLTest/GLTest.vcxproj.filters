@@ -15,5 +15,13 @@
     <ClCompile Include="..\..\src\glad\glad.c">
       <Filter>glad</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Shader.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
