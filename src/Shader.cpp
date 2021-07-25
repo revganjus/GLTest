@@ -1,6 +1,7 @@
 #include "Shader.h"
 #include <glad/glad.h>
 #include <iostream>
+#include <fstream>
 
 //
 // Globals
@@ -64,18 +65,47 @@ void CShader::Use()
   glUseProgram(m_ProgramID);
 }
 
-//
-// Service
-//
-
 void CShader::LoadFromFile(
     const std::string & _VertexPath,
     const std::string & _FragmentPath
   )
 {
-  // TODO
+  glDeleteProgram(m_ProgramID);
 
-  LoadFromSource(g_DefaultVertexShaderSource, g_DefaultFragmentShaderSource); // TEMP
+  LoadFromSource(
+      LoadFromFile(_VertexPath,   g_DefaultVertexShaderSource),
+      LoadFromFile(_FragmentPath, g_DefaultFragmentShaderSource)
+    );
+}
+
+//
+// Service
+//
+
+std::string CShader::LoadFromFile(
+    const std::string & _FilePath,
+    const char *        _DefaultContent
+  )
+{
+  std::ifstream FileStream;
+  FileStream.open(_FilePath);
+
+  std::string FileContent;
+
+  if (FileStream.is_open())
+  {
+    std::string Line;
+    while (std::getline(FileStream, Line))
+    {
+      FileContent += Line + "\n";
+    }
+
+    FileStream.close();
+
+    return FileContent;
+  }
+
+  return _DefaultContent;
 }
 
 void CShader::LoadFromSource(

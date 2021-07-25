@@ -55,7 +55,7 @@ int main()
 
   // build and compile our shader program
   // ------------------------------------
-  CShader * MyShader = new CShader(); // TODO forward path to shaders
+  CShader * MyShader = new CShader("../res/shaders/shader.vsh", "");
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------

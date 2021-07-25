@@ -19,17 +19,22 @@ public: // Interface
 
   void Use();
 
-protected: // Service
-
   void LoadFromFile(
       const std::string & _VertexPath,
       const std::string & _FragmentPath
     );
 
+protected: // Service
+
+  std::string LoadFromFile(
+      const std::string & _FilePath,
+      const char *        _DefaultContent
+    );
+
   void LoadFromSource(
       std::string _VertexSource,
       std::string _FragmentSource
-  );
+    );
 
   void CreateShaderProgram(
       const char * _VertexSource,
